@@ -1,0 +1,17 @@
+{
+    "name": "rashed/minivel",
+    "autoload": {
+        "psr-4": {
+            "App\\": "./"
+        }
+    },
+    "authors": [
+        {
+            "name": "rashedraju",
+            "email": "rashedraju.cs@gmail.com"
+        }
+    ],
+    "require": {
+        "vlucas/phpdotenv": "^5.3"
+    }
+}
