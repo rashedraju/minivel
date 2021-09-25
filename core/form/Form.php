@@ -11,11 +11,15 @@ class Form
         return new Form;
     }
 
-    public static function field(Model $model, string $attribute): Field{
-        return new Field($model, $attribute);
+    public function inputField(Model $model, string $attribute) : InputField {
+        return new InputField($model, $attribute);
     }
 
-    public static function end(){
+    public function textareaField(Model $model, string $attribute) : TextareaField {
+        return new TextareaField($model, $attribute);
+    }
+
+    public function end(){
         echo "</form>";
     }
 }
