@@ -2,9 +2,9 @@
 
 namespace App\models;
 
-use App\core\DBModel;
+use App\core\UserModel;
 
-class User extends DBModel
+class User extends UserModel
 {
     public const STATUS_ACTIVE = 1;
     public const STATUS_INACTIVE = 0;
@@ -16,7 +16,7 @@ class User extends DBModel
     public string $confirmPassword = "";
     public int $status = self::STATUS_INACTIVE;
 
-    public function save(){
+    public function save() : bool {
         $this->password = password_hash($this->password, PASSWORD_BCRYPT);
         return parent::save();
     }
@@ -24,21 +24,25 @@ class User extends DBModel
     public function rules(): array{
         return [
             "username" => [self::RULE_REQUIRE],
-            "email" => [self::RULE_REQUIRE, self::RULE_EMAIL, self::RULE_UNIQUE],
+            "email" => [self::RULE_REQUIRE, self::RULE_EMAIL, [self::RULE_UNIQUE, $this]],
             "password" => [self::RULE_REQUIRE, [self::RULE_MIN, 8], [self::RULE_MAX, 24]],
             "confirmPassword" => [self::RULE_REQUIRE, [self::RULE_MATCH, "password"]],
         ];
     }
 
-    public function getTableName(): string{
+    public static function getTableName(): string{
         return "users";
+    }
+
+    public static function getPrimaryKey() : string{
+        return "id";
     }
 
     public function getAttributes(): array{
         return ["username", "email", "password", "status"];
     }
 
-    public function getLabel() : array
+    public function getLabels() : array
     {
         return [
             "username" => "Username",
@@ -46,5 +50,10 @@ class User extends DBModel
             "password" => "Password",
             "confirmPassword" => "Confirm password"
         ];
+    }
+
+    public function getDisplayName(): string
+    {
+        return $this->username;
     }
 }
