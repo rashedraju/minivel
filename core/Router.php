@@ -1,6 +1,8 @@
 <?php
 namespace App\core;
 
+use App\core\exceptions\NotFoundException;
+
 class Router{
     public array $routes = [];
     public Request $request;
@@ -19,47 +21,31 @@ class Router{
         $this->routes['post'][$path] = $callback;
     }
 
+    /**
+     * @throws NotFoundException
+     */
     public function resolve(){
+        $app = Application::$app;
         $path = $this->request->getPath();
         $method = $this->request->method();
 
         $callback = $this->routes[$method][$path] ?? false;
         if($callback){
             if(is_string($callback)){
-                return $this->renderView($callback);
+                return $app->view->renderView($callback);
             }
             if(is_array($callback)){
-                Application::$app->controller = new $callback[0];
-                $callback[0] = Application::$app->controller;
+                $app->controller = new $callback[0];
+                $callback[0] = $app->controller;
+
+                $middlewares = $app->controller->getMiddlewares();
+                foreach ($middlewares as $middleware) {
+                    $middleware->execute($callback[1]);
+                }
             }
-            return call_user_func($callback, $this->request);
+            return call_user_func($callback, $this->request, $this->response);
         }
 
-        $this->response->setStatusCode(404);
-        return $this->renderView("_404");
-    }
-
-    public function renderView($view, $args = []){
-        $layoutView = $this->renderLayoutView();
-        $contentView = $this->renderContentView($view, $args);
-        return str_replace("{{content}}", $contentView, $layoutView);
-    }
-
-    protected function renderLayoutView(){
-        $app = Application::$app;
-        $layout = Application::$app->controller->layout;
-        ob_start();
-        include_once Application::$ROOT_DIR . "/views/layouts/$layout.php";
-        return ob_get_clean();
-    }
-
-    protected function renderContentView($viewFile, $args){
-        foreach ($args as $key => $value){
-            $$key = $value;
-        }
-
-        ob_start();
-        include_once Application::$ROOT_DIR . "/views/{$viewFile}.php";
-        return ob_get_clean();
+        throw new NotFoundException();
     }
 }
