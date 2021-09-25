@@ -4,21 +4,35 @@ namespace App\controllers;
 
 use App\core\Application;
 use App\core\Request;
+use App\core\Response;
+use App\models\LoginForm;
 use App\models\User;
+use App\core\middlewares\AuthMiddleware;
 
 class AuthController extends Controller
 {
-    public function login(Request $request){
-        $this->setLayout("auth");
-
-        if($request->isPost()){
-            return "handling login";
-        }
-        // render login view
-        return $this->render("login");
+    public function __construct()
+    {
+        $this->registerMiddleware(new AuthMiddleware(["profile"]));
     }
 
-    public function register(Request $request){
+    public function login(Request $request, Response $response){
+        $this->setLayout("auth");
+        $loginModel = new LoginForm();
+
+        if($request->isPost()){
+            $loginModel->loadData($request->getBody());
+            if($loginModel->validate() && $loginModel->login()){
+                $response->redirect("/");
+            }
+        }
+        // render login view
+        return $this->render("login", [
+            "model" => $loginModel
+        ]);
+    }
+
+    public function register(Request $request, Response $response){
         $this->setLayout("auth");
         $register = new User;
 
@@ -27,10 +41,19 @@ class AuthController extends Controller
 
             if($register->validate() && $register->save()){
                 Application::$app->session->setFlashMessage("success", "Thanks for registering");
-                Application::$app->response->redirect("/");
+                $response->redirect("/");
             }
         }
         // render register view
         return $this->render("register", ["model" => $register]);
+    }
+
+    public function logout(Request $request, Response $response){
+        Application::$app->logout();
+        $response->redirect("/");
+    }
+
+    public function profile(){
+        return $this->render("profile");
     }
 }
