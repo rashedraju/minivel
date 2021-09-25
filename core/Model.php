@@ -13,7 +13,8 @@ abstract class Model
 
     public array $errors = [];
 
-    abstract function rules();
+    abstract public function rules() : array;
+    abstract public function getLabels() : array;
 
     public function loadData($data){
         foreach ($data as $key => $value){
@@ -23,9 +24,10 @@ abstract class Model
         }
     }
 
-    public function validate(){
+    public function validate(): bool{
         foreach ($this->rules() as $attribute => $rules){
             $value = $this->$attribute;
+            $label = $this->getLabel($attribute);
 
             foreach ($rules as $rule){
                 $ruleName = $rule;
@@ -35,34 +37,35 @@ abstract class Model
                 }
 
                 if($ruleName === self::RULE_REQUIRE && empty($value)){
-                    $this->setError($attribute, "$attribute is required.");
+                    $this->setError($attribute, "$label is required.");
                 }
 
                 if($ruleName === self::RULE_EMAIL && !filter_var($value, FILTER_VALIDATE_EMAIL)){
-                    $this->setError($attribute, "Please enter valid email address");
+                    $this->setError($attribute, "Please enter valid $label");
                 }
 
                 if($ruleName === self::RULE_MIN && strlen($value) < $rule[1]){
-                    $this->setError($attribute, "Min length of $attribute must be $rule[1]");
+                    $this->setError($attribute, "Min length of $label must be $rule[1]");
                 }
 
                 if($ruleName === self::RULE_MAX && strlen($value) > $rule[1]){
-                    $this->setError($attribute, "max length of $attribute must be $rule[1]");
+                    $this->setError($attribute, "max length of $label must be" . $this->getLabel($rule[1]));
                 }
 
                 if($ruleName === self::RULE_MATCH && $value !== $this->{$rule[1]}){
-                    $this->setError($attribute, "The field must be the same as $rule[1]");
+                    $this->setError($attribute, "The $label must be the same as " . $this->getLabel($rule[1]));
                 }
 
                 if($ruleName === self::RULE_UNIQUE){
-                    $tableName = $this->getTableName();
+                    $className = $rule[1];
+                    $tableName = $className::getTableName();
 
                     $statement = Application::$app->database->prepare("SELECT * FROM $tableName WHERE $attribute=:$attribute");
                     $statement->bindValue(":$attribute", $this->$attribute);
                     $statement->execute();
                     $record = $statement->fetchObject();
                     if($record){
-                        $this->setError($attribute, "Email address already exists");
+                        $this->setError($attribute, "$label already exists");
                     }
                 }
             }
@@ -81,5 +84,9 @@ abstract class Model
 
     public function getFirstError($attribute){
         return $this->errors[$attribute][0] ?? false;
+    }
+
+    public function getLabel($attribute){
+        return $this->getLabels()[$attribute] ?? "";
     }
 }
