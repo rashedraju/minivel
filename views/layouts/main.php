@@ -5,7 +5,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-F3w7mX95PdgyTmZZMECAngseQB83DfGTowi0iMjiWaeVhAn4FJkqJByhZMI3AhiU" crossorigin="anonymous">
-    <title>Minivel</title>
+    <title><?php echo $this->title ?></title>
 </head>
 <body>
     <nav class="navbar navbar-expand-lg navbar-light bg-light">
@@ -23,6 +23,7 @@
                 <a class="nav-link" href="/contact">Contact</a>
                 </li>
             </ul>
+            <?php if(\App\core\Application::isGuest()): ?>
             <ul class="navbar-nav ml-auto mb-2 mb-lg-0">
                 <li class="nav-item">
                 <a class="nav-link active" aria-current="page" href="/login">Login</a>
@@ -31,6 +32,16 @@
                 <a class="nav-link" href="/register">Register</a>
                 </li>
             </ul>
+            <?php else: ?>
+            <ul class="navbar-nav ml-auto mb-2 mb-lg-0">
+                <li class="nav-item">
+                    <a class="nav-link active" aria-current="page" href="/profile"><?php echo \App\core\Application::$app->user->getDisplayName(); ?></a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link active" aria-current="page" href="/logout">Logout</a>
+                </li>
+            </ul>
+            <?php endif; ?>
             </div>
         </div>
     </nav>
