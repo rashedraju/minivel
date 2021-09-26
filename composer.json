@@ -1,5 +1,5 @@
 {
-    "name": "rashed/minivel",
+    "name": "rashedraju/minivel",
     "autoload": {
         "psr-4": {
             "App\\": "./"
