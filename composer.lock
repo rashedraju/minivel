@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "aaf1b1858291cc7bb8cc8dbe96929893",
+    "content-hash": "294a0af4be2a742ec24f433707e83619",
     "packages": [
         {
             "name": "graham-campbell/result-type",
@@ -135,6 +135,40 @@
                 }
             ],
             "time": "2021-08-28T21:27:29+00:00"
+        },
+        {
+            "name": "rashedraju/minivel-core",
+            "version": "v1.0.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/rashedraju/minivel-core.git",
+                "reference": "088c07dc828220fa4ba159f6e15e2bb2dfbad891"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/rashedraju/minivel-core/zipball/088c07dc828220fa4ba159f6e15e2bb2dfbad891",
+                "reference": "088c07dc828220fa4ba159f6e15e2bb2dfbad891",
+                "shasum": ""
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "Minivel\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "authors": [
+                {
+                    "name": "rashedraju",
+                    "email": "rashedraju.cs@gmail.com"
+                }
+            ],
+            "description": "Simple PHP MVC Framework",
+            "support": {
+                "issues": "https://github.com/rashedraju/minivel-core/issues",
+                "source": "https://github.com/rashedraju/minivel-core/tree/v1.0.0"
+            },
+            "time": "2021-09-26T04:55:14+00:00"
         },
         {
             "name": "symfony/polyfill-ctype",
