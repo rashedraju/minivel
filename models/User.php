@@ -1,8 +1,8 @@
 <?php
 
-namespace App\models;
+namespace App\Models;
 
-use App\core\UserModel;
+use Minivel\UserModel;
 
 class User extends UserModel
 {

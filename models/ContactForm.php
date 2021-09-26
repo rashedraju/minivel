@@ -1,8 +1,8 @@
 <?php
 
-namespace App\models;
+namespace App\Models;
 
-use App\core\Model;
+use Minivel\Model;
 
 class ContactForm extends Model
 {

@@ -1,10 +1,10 @@
 <?php
 /**
- * @var \App\core\View $this
- * @var \App\core\UserModel $model
+ * @var Minivel\View $this
+ * @var Minivel\UserModel $model
  */
 
-use App\core\form\Form;
+use Minivel\Form\Form;
 
 $this->title = "Register";
 ?>

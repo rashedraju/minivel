@@ -1,9 +1,9 @@
 <?php
 
-namespace App\controllers;
+namespace App\Controllers;
 
-use App\core\Application;
-use App\core\middlewares\BaseMiddleware;
+use Minivel\Application;
+use Minivel\Middlewares\BaseMiddleware;
 
 class Controller
 {

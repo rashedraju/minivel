@@ -1,9 +1,9 @@
 <?php
 
-namespace App\models;
+namespace App\Models;
 
-use App\core\Application;
-use App\core\Model;
+use Minivel\Application;
+use Minivel\Model;
 
 class LoginForm extends Model
 {

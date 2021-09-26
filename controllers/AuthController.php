@@ -1,13 +1,13 @@
 <?php
 
-namespace App\controllers;
+namespace App\Controllers;
 
-use App\core\Application;
-use App\core\Request;
-use App\core\Response;
-use App\models\LoginForm;
-use App\models\User;
-use App\core\middlewares\AuthMiddleware;
+use Minivel\Application;
+use Minivel\Request;
+use Minivel\Response;
+use App\Models\LoginForm;
+use App\Models\User;
+use Minivel\Middlewares\AuthMiddleware;
 
 class AuthController extends Controller
 {

@@ -1,8 +1,11 @@
 <?php
+
+use Minivel\Application;
+
 class m0001_initial
 {
     public function up(){
-        $db = \App\core\Application::$app->database;
+        $db = Application::$app->database;
         $sql = "CREATE TABLE IF NOT EXISTS users(
         id INT PRIMARY KEY AUTO_INCREMENT,
         username VARCHAR(255) NOT NULL ,
@@ -15,7 +18,7 @@ class m0001_initial
     }
 
     public function down(){
-        $db = \App\core\Application::$app->database;
+        $db = Application::$app->database;
         $db->pdo->exec("DROP TABLE users");
     }
 }

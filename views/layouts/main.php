@@ -1,3 +1,6 @@
+<?php
+use Minivel\Application;
+?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -23,7 +26,7 @@
                 <a class="nav-link" href="/contact">Contact</a>
                 </li>
             </ul>
-            <?php if(\App\core\Application::isGuest()): ?>
+            <?php if(\Minivel\Application::isGuest()): ?>
             <ul class="navbar-nav ml-auto mb-2 mb-lg-0">
                 <li class="nav-item">
                 <a class="nav-link active" aria-current="page" href="/login">Login</a>
@@ -35,7 +38,7 @@
             <?php else: ?>
             <ul class="navbar-nav ml-auto mb-2 mb-lg-0">
                 <li class="nav-item">
-                    <a class="nav-link active" aria-current="page" href="/profile"><?php echo \App\core\Application::$app->user->getDisplayName(); ?></a>
+                    <a class="nav-link active" aria-current="page" href="/profile"><?php echo \Minivel\Application::$app->user->getDisplayName(); ?></a>
                 </li>
                 <li class="nav-item">
                     <a class="nav-link active" aria-current="page" href="/logout">Logout</a>
@@ -46,10 +49,10 @@
         </div>
     </nav>
     <div class="container">
-        <?php if(\App\core\Application::$app->session->getFlashMessage("success")) :?>
+        <?php if(Application::$app->session->getFlashMessage("success")) :?>
             <div class="my-2">
                 <div class="alert alert-success" role="alert">
-                    <?php echo \App\core\Application::$app->session->getFlashMessage("success") ?>
+                    <?php echo Application::$app->session->getFlashMessage("success") ?>
                 </div>
             </div>
         <?php endif ?>

@@ -1,5 +1,5 @@
 <?php
-/** @var \App\core\View $this */
+/** @var Minivel\View $this */
 
 $this->title = "Profile";
 ?>

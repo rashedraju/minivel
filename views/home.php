@@ -1,6 +1,6 @@
 <?php
 /**
- * @var \App\core\View $this
+ * @var Minivel\View $this
  * @var $name
  */
 $this->title = "Home";

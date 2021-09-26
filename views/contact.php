@@ -1,10 +1,10 @@
 <?php
 /**
- * @var \App\core\View $this
- * @var \App\models\ContactForm $model
+ * @var \Minivel\View $this
+ * @var \App\Models\ContactForm $model
  */
 $this->title = "Contact";
-use App\core\form\Form;
+use Minivel\Form\Form;
 
 ?>
 <h1>Contact</h1>

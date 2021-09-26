@@ -1,16 +1,18 @@
 <?php
 require __DIR__ . "/../vendor/autoload.php";
 
-use App\controllers\AuthController;
-use App\core\Application;
-use App\controllers\SiteController;
+use App\Controllers\AuthController;
+use App\Models\User;
+use Dotenv\Dotenv;
+use Minivel\Application;
+use App\Controllers\SiteController;
 
-$dotenv = \Dotenv\Dotenv::createImmutable(dirname(__DIR__));
+$dotenv = Dotenv::createImmutable(dirname(__DIR__));
 $dotenv->safeLoad();
 
 $config = [
-    "userClass" => \App\models\User::class,
-    "db" => [
+    "userClass" => User::class,
+    "DB" => [
         "dsn" => $_ENV['DB_DSN'],
         "username" => $_ENV['DB_USER'],
         "password" => $_ENV['DB_PASSWORD']
