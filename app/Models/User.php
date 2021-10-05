@@ -21,7 +21,7 @@ class User extends UserModel
         return parent::save();
     }
 
-    public function rules(): array{
+    public function getRules(): array{
         return [
             "username" => [self::RULE_REQUIRE],
             "email" => [self::RULE_REQUIRE, self::RULE_EMAIL, [self::RULE_UNIQUE, $this]],
