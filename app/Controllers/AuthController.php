@@ -7,17 +7,10 @@ use Minivel\Request;
 use Minivel\Response;
 use App\Models\LoginForm;
 use App\Models\User;
-use Minivel\Middlewares\AuthMiddleware;
 
 class AuthController extends Controller
 {
-    public function __construct()
-    {
-        $this->registerMiddleware(new AuthMiddleware(["profile"]));
-    }
-
     public function login(Request $request, Response $response){
-        $this->setLayout("auth");
         $loginModel = new LoginForm();
 
         if($request->isPost()){
@@ -33,7 +26,6 @@ class AuthController extends Controller
     }
 
     public function register(Request $request, Response $response){
-        $this->setLayout("auth");
         $register = new User;
 
         if($request->isPost()){
@@ -51,9 +43,5 @@ class AuthController extends Controller
     public function logout(Request $request, Response $response){
         Application::$app->logout();
         $response->redirect("/");
-    }
-
-    public function profile(){
-        return $this->render("profile");
     }
 }
