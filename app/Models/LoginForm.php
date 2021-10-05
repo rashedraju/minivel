@@ -10,7 +10,7 @@ class LoginForm extends Model
     public string $email = "";
     public string $password = "";
 
-    public function rules() : array
+    public function getRules() : array
     {
         return [
             "email" => [self::RULE_REQUIRE, self::RULE_EMAIL],
