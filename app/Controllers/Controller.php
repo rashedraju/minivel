@@ -4,13 +4,14 @@ namespace App\Controllers;
 
 use Minivel\Application;
 use Minivel\Middlewares\BaseMiddleware;
+use Minivel\BaseController;
 
-class Controller
+abstract class Controller extends BaseController
 {
     public string $layout = "main";
     protected array $middlewares = [];
 
-    public function setLayout($layout){
+    public function setLayout(string $layout){
         $this->layout = $layout;
     }
 
@@ -30,6 +31,4 @@ class Controller
     {
         return $this->middlewares;
     }
-
-
 }
