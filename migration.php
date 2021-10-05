@@ -1,9 +1,10 @@
 <?php
 require __DIR__ . "/vendor/autoload.php";
 
+use Dotenv\Dotenv;
 use Minivel\Application;
 
-$dotenv = \Dotenv\Dotenv::createImmutable(__DIR__);
+$dotenv = Dotenv::createImmutable(__DIR__);
 $dotenv->safeLoad();
 
 $config = [
